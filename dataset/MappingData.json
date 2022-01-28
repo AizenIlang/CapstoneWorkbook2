@@ -1,0 +1,42 @@
+{
+	"name": "MappingData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Mapping Data",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "GDP Data_pivot.xlsx",
+				"container": "capstone2chesca"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "TableName",
+				"type": "String"
+			},
+			{
+				"name": "Country Code",
+				"type": "String"
+			},
+			{
+				"name": "Region",
+				"type": "String"
+			},
+			{
+				"name": "IncomeGroup",
+				"type": "String"
+			},
+			{
+				"name": "SpecialNotes",
+				"type": "String"
+			}
+		]
+	}
+}
