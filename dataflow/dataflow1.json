@@ -19,9 +19,27 @@
 					"name": "source2"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
-			"script": "source(output(\n\t\t{Country Name} as string,\n\t\t{Indicator Name} as string,\n\t\t{2002} as string,\n\t\t{2003} as string,\n\t\t{2004} as string,\n\t\t{2005} as string,\n\t\t{2006} as string,\n\t\t{2007} as string,\n\t\t{2008} as string,\n\t\t{2009} as string,\n\t\t{2010} as string,\n\t\t{2011} as string,\n\t\t{2012} as string,\n\t\t{2013} as string,\n\t\t{2014} as string,\n\t\t{2015} as string,\n\t\t{2016} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> GDP\nsource(output(\n\t\tTableName as string,\n\t\t{Country Code} as string,\n\t\tRegion as string,\n\t\tIncomeGroup as string,\n\t\tSpecialNotes as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source2"
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DerivedColumn1"
+				},
+				{
+					"name": "Pivot1"
+				},
+				{
+					"name": "Join1"
+				}
+			],
+			"script": "source(output(\n\t\t{Country Name} as string,\n\t\t{Indicator Name} as string,\n\t\t{2002} as decimal(10,0),\n\t\t{2003} as decimal(10,0),\n\t\t{2004} as decimal(10,0),\n\t\t{2005} as decimal(10,0),\n\t\t{2006} as decimal(10,0),\n\t\t{2007} as decimal(10,0),\n\t\t{2008} as decimal(10,0),\n\t\t{2009} as decimal(10,0),\n\t\t{2010} as decimal(10,0),\n\t\t{2011} as decimal(10,0),\n\t\t{2012} as decimal(10,0),\n\t\t{2013} as decimal(10,0),\n\t\t{2014} as decimal(10,0),\n\t\t{2015} as decimal(10,0),\n\t\t{2016} as decimal(10,0)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> GDP\nsource(output(\n\t\tTableName as string,\n\t\t{Country Code} as string,\n\t\tRegion as string,\n\t\tIncomeGroup as string,\n\t\tSpecialNotes as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source2\nGDP derive() ~> DerivedColumn1\nDerivedColumn1 pivot(groupBy({Country Name}),\n\tcolumnNaming: '$N$V',\n\tlateral: true) ~> Pivot1\nPivot1, source2 join({Country Name} == TableName,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nJoin1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 		}
 	}
 }
