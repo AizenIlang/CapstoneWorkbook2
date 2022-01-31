@@ -1,0 +1,112 @@
+{
+	"name": "AusyData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Country Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Indicator Name",
+				"type": "varchar"
+			},
+			{
+				"name": "2002",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "2003",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "2004",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "2005",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "2006",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "2007",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "2008",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "2009",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "2010",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "2011",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "2012",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "2014",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "2015",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "2016",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Country Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Region",
+				"type": "varchar"
+			},
+			{
+				"name": "IncomeGroup",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Australia"
+		}
+	}
+}
