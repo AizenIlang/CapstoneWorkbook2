@@ -3,7 +3,31 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "data transfer",
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow1",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Copy data1",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -16,12 +40,9 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "ExcelSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						}
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
@@ -31,7 +52,59 @@
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
 							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"fileExtension": ".csv"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy data2",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
 						}
 					},
 					"enableStaging": false,
@@ -40,24 +113,36 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "Country Name",
-									"type": "String",
-									"physicalType": "String"
+									"name": "Id",
+									"type": "Int32",
+									"physicalType": "int"
 								},
 								"sink": {
-									"name": "Country Name",
+									"name": "Id",
 									"type": "String",
 									"physicalType": "String"
 								}
 							},
 							{
 								"source": {
-									"name": "Indicator Name",
+									"name": "Countryname",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "varchar"
 								},
 								"sink": {
-									"name": "Indicator Name",
+									"name": "Countryname",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Indicatorname",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Indicatorname",
 									"type": "String",
 									"physicalType": "String"
 								}
@@ -65,8 +150,8 @@
 							{
 								"source": {
 									"name": "2002",
-									"type": "String",
-									"physicalType": "String"
+									"type": "Int64",
+									"physicalType": "bigint"
 								},
 								"sink": {
 									"name": "2002",
@@ -77,8 +162,8 @@
 							{
 								"source": {
 									"name": "2003",
-									"type": "String",
-									"physicalType": "String"
+									"type": "Int64",
+									"physicalType": "bigint"
 								},
 								"sink": {
 									"name": "2003",
@@ -89,8 +174,8 @@
 							{
 								"source": {
 									"name": "2004",
-									"type": "String",
-									"physicalType": "String"
+									"type": "Int64",
+									"physicalType": "bigint"
 								},
 								"sink": {
 									"name": "2004",
@@ -101,8 +186,8 @@
 							{
 								"source": {
 									"name": "2005",
-									"type": "String",
-									"physicalType": "String"
+									"type": "Int64",
+									"physicalType": "bigint"
 								},
 								"sink": {
 									"name": "2005",
@@ -113,8 +198,8 @@
 							{
 								"source": {
 									"name": "2006",
-									"type": "String",
-									"physicalType": "String"
+									"type": "Int64",
+									"physicalType": "bigint"
 								},
 								"sink": {
 									"name": "2006",
@@ -125,8 +210,8 @@
 							{
 								"source": {
 									"name": "2007",
-									"type": "String",
-									"physicalType": "String"
+									"type": "Int64",
+									"physicalType": "bigint"
 								},
 								"sink": {
 									"name": "2007",
@@ -137,8 +222,8 @@
 							{
 								"source": {
 									"name": "2008",
-									"type": "String",
-									"physicalType": "String"
+									"type": "Int64",
+									"physicalType": "bigint"
 								},
 								"sink": {
 									"name": "2008",
@@ -149,8 +234,8 @@
 							{
 								"source": {
 									"name": "2009",
-									"type": "String",
-									"physicalType": "String"
+									"type": "Int64",
+									"physicalType": "bigint"
 								},
 								"sink": {
 									"name": "2009",
@@ -161,8 +246,8 @@
 							{
 								"source": {
 									"name": "2010",
-									"type": "String",
-									"physicalType": "String"
+									"type": "Int64",
+									"physicalType": "bigint"
 								},
 								"sink": {
 									"name": "2010",
@@ -173,8 +258,8 @@
 							{
 								"source": {
 									"name": "2011",
-									"type": "String",
-									"physicalType": "String"
+									"type": "Int64",
+									"physicalType": "bigint"
 								},
 								"sink": {
 									"name": "2011",
@@ -185,8 +270,8 @@
 							{
 								"source": {
 									"name": "2012",
-									"type": "String",
-									"physicalType": "String"
+									"type": "Int64",
+									"physicalType": "bigint"
 								},
 								"sink": {
 									"name": "2012",
@@ -197,8 +282,8 @@
 							{
 								"source": {
 									"name": "2013",
-									"type": "String",
-									"physicalType": "String"
+									"type": "Int64",
+									"physicalType": "bigint"
 								},
 								"sink": {
 									"name": "2013",
@@ -209,8 +294,8 @@
 							{
 								"source": {
 									"name": "2014",
-									"type": "String",
-									"physicalType": "String"
+									"type": "Int64",
+									"physicalType": "bigint"
 								},
 								"sink": {
 									"name": "2014",
@@ -221,8 +306,8 @@
 							{
 								"source": {
 									"name": "2015",
-									"type": "String",
-									"physicalType": "String"
+									"type": "Int64",
+									"physicalType": "bigint"
 								},
 								"sink": {
 									"name": "2015",
@@ -233,11 +318,47 @@
 							{
 								"source": {
 									"name": "2016",
-									"type": "String",
-									"physicalType": "String"
+									"type": "Int64",
+									"physicalType": "bigint"
 								},
 								"sink": {
 									"name": "2016",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Countrycode",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Countrycode",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Region",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Region",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Incomegroup",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Incomegroup",
 									"type": "String",
 									"physicalType": "String"
 								}
@@ -252,7 +373,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "GDP",
+						"referenceName": "AzureSqlTable2",
 						"type": "DatasetReference"
 					}
 				],
