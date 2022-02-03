@@ -111,7 +111,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "AustraliaData"
+			"table": "AusData"
 		}
 	}
 }
