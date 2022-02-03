@@ -9,7 +9,7 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "Id",
+				"name": "id",
 				"type": "int",
 				"precision": 10
 			},
@@ -97,7 +97,7 @@
 				"precision": 19
 			},
 			{
-				"name": "Country code",
+				"name": "Country Code",
 				"type": "varchar"
 			},
 			{
